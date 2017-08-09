@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const PostSchema =require('./post');
 const Schema = mongoose.Schema;
 
 const UserSchema = new Schema({
@@ -10,7 +11,14 @@ const UserSchema = new Schema({
         },
         required: [true, 'Name is required.']
     },
-    postCount: Number
+    posts: [PostSchema],
+    likes: Number
+});
+
+//use function declaration instead of => so the value of this will refer to the current instance of the model
+//rather then the file object
+UserSchema.virtual('postCount').get(function() {
+    return this.posts.length;
 });
 
 const User = mongoose.model('user', UserSchema);
