@@ -13,8 +13,14 @@ before((done) => {
 });
 
 beforeEach((done) => {
-    mongoose.connection.collections.users.drop(() => {
-        done();
+    //Use lower case for property name.  Mongoose normalize each collection name to lowercase.
+    const { users, comments, blogposts } = mongoose.connection.collections;
+    users.drop(() => {
+        comments.drop(() => {
+            blogposts.drop(() => {
+                done();
+            });
+        });
     });
 });    
 

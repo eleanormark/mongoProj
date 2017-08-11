@@ -12,7 +12,11 @@ const UserSchema = new Schema({
         required: [true, 'Name is required.']
     },
     posts: [PostSchema],
-    likes: Number
+    likes: Number,
+    blogPosts: [{
+        type: Schema.Types.ObjectId,
+    ref: 'blogPost'
+    }]
 });
 
 //use function declaration instead of => so the value of this will refer to the current instance of the model
